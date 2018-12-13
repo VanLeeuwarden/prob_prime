@@ -72,9 +72,8 @@ pub fn baillie_psw(n: u64) -> bool {
 
 	//base 2 strong pseudoprime test
 	let (odd, even_pow) = split_odd_even(n-1);
-	//println!("passed miller split odd even ");
+
 	if miller_rabin_witness(n, odd, even_pow, 2) {
-		return trues(n, odd, even_pow, 2) {
 		return true
 	}
 

@@ -2,7 +2,7 @@ use std::u64;
 
 extern crate rand;
 use rand::distributions::{Distribution, Uniform};
-
+ 
 extern crate modular_arithmetic;
 use modular_arithmetic::{mut_even_power, split_odd_even, jacobi_symbol};
 
@@ -11,27 +11,32 @@ use pseudoprime::{miller_rabin_witness, lucas_test};
 
 
 
-//TODO: ensure # rounds < n;
+//TODO: ensure # rounds < n; infinite loop otherwise
 //true => composite | false => maybe prime
 pub fn miller_rabin(n: u64, rounds: u8) -> bool {
+	//manually check divisibility properties for small primes
+	//improves efficiency
 	match trial_division_test(&n) {
 		Some(b) => return b,
 		None => ()
 	}
 	
-
 	let mut tested_numbers = Vec::with_capacity(rounds as usize);
+	//uniform sample space
 	let mut rng = rand::thread_rng();
 	let sample_space = Uniform::from(2..n-1);
 
+	//split n-1 into odd component and even power in 2 steps
 	let mut odd_component = n-1;
 	let power2 = mut_even_power(&mut odd_component); //mutate n-1 into odd component, return even power
 
+	//loop until #rounds different numbers have been tried
 	while tested_numbers.len() < rounds as usize {
 
 		let test_num = sample_space.sample(&mut rng);
+		//excludes numbers already tried
 		if !tested_numbers.contains(&test_num){
-
+			//run a single miller rabin test 
 			let test_result = miller_rabin_witness(n, odd_component, power2, test_num);
 			if test_result {
 				return true
@@ -55,7 +60,7 @@ pub fn baillie_psw(n: u64) -> bool {
 		None => ()
 	}
 
-	//check if n is a square
+	//check if n is a square manually
 	let possible_square = (n as f64).sqrt() as u64;
 	if possible_square * possible_square == n {
 		return true
@@ -69,10 +74,12 @@ pub fn baillie_psw(n: u64) -> bool {
 	let (odd, even_pow) = split_odd_even(n-1);
 	//println!("passed miller split odd even ");
 	if miller_rabin_witness(n, odd, even_pow, 2) {
+		return trues(n, odd, even_pow, 2) {
 		return true
 	}
 
 	//find D with jacobi symbol (D/n) = -1
+	//guaranteed to terminate
 	let mut d:i64 = 5;
 	let mut d_is_neg = false;
 

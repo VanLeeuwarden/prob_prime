@@ -5,6 +5,7 @@ authors = ["VanLeeuwarden"]
 
 description = "Probabilistic algorithms for checking whether integer is prime or not. Implements Rabin-Miller test and Baillie-PSW test. Strictly speaking, these are 'compositionality' tests i.e the algorithms check whether a number is composite - if deemed so (output=true) then the number is certainly composite; if the output is false, then the number is prime with high probability."
 license = "MIT"
+repository = "https://github.com/VanLeeuwarden/prob_prime"
 
 [dependencies]
 rand = "0.6.0"

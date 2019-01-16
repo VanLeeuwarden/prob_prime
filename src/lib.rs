@@ -121,3 +121,22 @@ fn trial_division_test(n: &u64) -> Option<bool> {
 	}
 	return None
 }
+
+#[test]
+fn miller_rabin_composite() {
+	assert_eq!(miller_rabin(16, 4), true);
+	assert_eq!(miller_rabin(60, 4), true);
+	assert_eq!(miller_rabin(55, 4), true);
+	assert_eq!(miller_rabin(28, 4), true);
+	assert_eq!(miller_rabin(34, 4), true);
+}
+
+
+#[test]
+fn baillie_psw_composite() {
+	assert_eq!(baillie_psw(16), true);
+	assert_eq!(baillie_psw(60), true);
+	assert_eq!(baillie_psw(55), true);
+	assert_eq!(baillie_psw(28), true);
+	assert_eq!(baillie_psw(34), true);
+}

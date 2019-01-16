@@ -1,4 +1,5 @@
 use std::u64;
+use std::cmp::min;
 
 extern crate rand;
 use rand::distributions::{Distribution, Uniform};
@@ -10,10 +11,9 @@ mod pseudoprime;
 use pseudoprime::{miller_rabin_witness, lucas_test};
 
 
-
-//TODO: ensure # rounds < n; infinite loop otherwise
 //true => composite | false => maybe prime
 pub fn miller_rabin(n: u64, rounds: u8) -> bool {
+	
 	//manually check divisibility properties for small primes
 	//improves efficiency
 	match trial_division_test(&n) {
@@ -21,7 +21,7 @@ pub fn miller_rabin(n: u64, rounds: u8) -> bool {
 		None => ()
 	}
 	
-	let mut tested_numbers = Vec::with_capacity(rounds as usize);
+	let mut tested_numbers = Vec::with_capacity(min(rounds as u64, n-2) as usize);
 	//uniform sample space
 	let mut rng = rand::thread_rng();
 	let sample_space = Uniform::from(2..n-1);

@@ -1,6 +1,6 @@
 # prob_prime
 
-A Rust library implementing a couple of fast, probabilistic algorithms for checking whether integer is prime or not. 
+A Rust library implementing fast, probabilistic algorithms for checking whether integer is prime or not. 
 Implements:
 * [Rabin-Miller](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test)
 * [Baillie-PSW](https://en.wikipedia.org/wiki/Baillie%E2%80%93PSW_primality_test) 
